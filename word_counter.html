@@ -1,0 +1,51 @@
+<!--
+/**
+ * file: word_counter.html
+ * type: Hyper-Text-Markup-Language
+ * date: 29_JUNE_2022
+ * author: Karlina Ray Beringer
+ * license: PUBLIC_DOMAIN
+ */
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WORD_COUNTER</title>
+    <link rel="stylesheet" href="karbytes_aesthetic.css">
+    <script src="word_counter.js"></script>
+    <style>
+        #text_input_field {
+            background: #ffff00;
+            color: #000000;
+            border-color: #00ff00;
+            border-width: 3px;
+            border-style: solid;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body onload="initialize_application()">
+    <h1>WORD_COUNTER</h1>
+    <p>1. Enter up to 3000 characters of text into the text field below.</p>
+    <p>2. Click the PROCESS button to get the total number of characters entered,
+       the total number of words entered, and the number of times each unique word
+       occurs inside the input string.
+    </p>
+    <p>Note that a word, within the context of this application, is a string consisting 
+           solely of letters of the English alphabet, decimal digits, and the underscore character (_). 
+           Characters which are neither letters of the English alphabet nor decimal digits nor the 
+           underscore character are treated by this application as delimiter characters.
+    </p>
+    <p><textarea id="text_input_field" rows="5" cols="80"></textarea></p>
+    <div id="output"><p>???</p></div>
+    <p>
+        <input type="button" id="process_button" value="PROCESS" value="process_input_text()">
+        &nbsp;
+        <input type="button" id="reset_button" value="RESET" value="reset_application()">
+    </p>
+    <div id="application_status_console" class="console"><p>???</p></div>
+</body>
+</html>

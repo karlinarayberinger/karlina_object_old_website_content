@@ -1,0 +1,121 @@
+--------------------------------
+Start Of Program
+--------------------------------
+
+The value which was entered for N is 7.
+
+N := 7.
+
+--------------------------------
+
+Computing the Nth term of the Fibonacci Sequence using recursion:
+
+fibonacci(7) = fibonacci(5) + fibonacci(6). // recursive case
+
+fibonacci(5) = fibonacci(3) + fibonacci(4). // recursive case
+
+fibonacci(3) = fibonacci(1) + fibonacci(2). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(4) = fibonacci(2) + fibonacci(3). // recursive case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(3) = fibonacci(1) + fibonacci(2). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(6) = fibonacci(4) + fibonacci(5). // recursive case
+
+fibonacci(4) = fibonacci(2) + fibonacci(3). // recursive case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(3) = fibonacci(1) + fibonacci(2). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(5) = fibonacci(3) + fibonacci(4). // recursive case
+
+fibonacci(3) = fibonacci(1) + fibonacci(2). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(4) = fibonacci(2) + fibonacci(3). // recursive case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(3) = fibonacci(1) + fibonacci(2). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(2) = fibonacci(0) + fibonacci(1). // recursive case
+
+fibonacci(0) = 1. // base case
+
+fibonacci(0) = 1. // base case
+
+A := fibonacci(7) = 21.
+
+The number of times which the recursive Fibonacci Sequence term function was called during this program runtime instance is 41.
+
+--------------------------------
+
+Computing the Nth term of the Fibonacci Sequence using iteration:
+
+fibonacci(0) = 1 = fibonacci(-2) + fibonacci(-1) = 1 + 1. // i := 0.
+
+fibonacci(1) = 2 = fibonacci(-1) + fibonacci(0) = 1 + 2. // i := 1.
+
+fibonacci(2) = 3 = fibonacci(0) + fibonacci(1) = 2 + 3. // i := 2.
+
+fibonacci(3) = 5 = fibonacci(1) + fibonacci(2) = 3 + 5. // i := 3.
+
+fibonacci(4) = 8 = fibonacci(2) + fibonacci(3) = 5 + 8. // i := 4.
+
+fibonacci(5) = 13 = fibonacci(3) + fibonacci(4) = 8 + 13. // i := 5.
+
+fibonacci(6) = 21 = fibonacci(4) + fibonacci(5) = 13 + 21. // i := 6.
+
+B := fibonacci(7) = 21.
+
+--------------------------------
+End Of Program
+--------------------------------

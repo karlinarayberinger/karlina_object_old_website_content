@@ -1,0 +1,357 @@
+--------------------------------
+Start Of Program
+--------------------------------
+
+// Print the data size of various C++ data types to the file output stream.
+sizeof(bool) := 1. // number of contiguous byte-sized memory cells which a bool type variable occupies
+sizeof(char) := 1. // number of contiguous byte-sized memory cells which a char type variable occupies
+sizeof(int) := 4. // number of contiguous byte-sized memory cells which an int type variable occupies
+sizeof(float) := 4. // number of contiguous byte-sized memory cells which a float type variable occupies
+sizeof(double) := 8. // number of contiguous byte-sized memory cells which a double type variable occupies
+sizeof(bool *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-bool type variable occupies 
+sizeof(char *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-char type variable occupies
+sizeof(int *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-int type variable occupies
+sizeof(int **) := 8. // number of contiguous byte-sized memory cells which a pointer-to-pointer-to-int type variable occupies
+sizeof(float *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-float type variable occupies
+sizeof(double *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-double type variable occupies
+sizeof(void *) := 8. // number of contiguous byte-sized memory cells which a void pointer (datatype independent pointer) occupies.
+
+--------------------------------
+
+// Declare an int type variable which will be used to demonstrate how C++ pointers work.
+int test_int = 25;
+
+// Declare a pointer which stores the address of the first cell of an int-sized block of memory.
+// (Note that intializing pointers to NULL prevents those variables from being set to "garbage" data).
+int * test_pointer_to_int = NULL;
+
+// Store the address of test_int in test_pointer_to_int using the reference (&) operator.
+test_pointer_to_int = &test_int;
+
+// Indirectly access the value stored in test_int using the dereference (*) operator.
+* test_pointer_to_int = 25.
+
+// Increment the value stored in test_pointer_to_int by one int-sized memory increment.
+test_pointer_to_int += 1;
+
+test_pointer_to_int := 0x7ffcd50d9db0. // memory address of the cell which is 4 cells to the right of test_int
+
+--------------------------------
+
+// Declare an char type variable which will be used to demonstrate how C++ pointers work.
+char test_char = 'K';
+
+// Declare a pointer which stores the address of the first cell of an char-sized block of memory.
+// (Use malloc to assign memory to the pointer-to-char variable).
+char * test_pointer_to_char = (char *) malloc(1);
+
+// Declare a void pointer and initialize it to the value stored in test_pointer_to_char.
+// (Unlike test_pointer_to_char, void_test_pointer will display the memory address that pointer stores to the output stream).
+void * test_void_pointer = test_pointer_to_char;
+
+// Store the address of test_char in test_pointer_to_char using the reference (&) operator.
+test_pointer_to_char = &test_char;
+test_void_pointer = test_pointer_to_char;
+
+test_void_pointer := 0x7ffcd50d9da3. // memory address of test_char
+
+// Indirectly access the value stored in test_char using the dereference (*) operator.
+* test_pointer_to_char = K.
+
+// Increment the value stored in test_pointer_to_int by one char-sized memory increment.
+test_pointer_to_char += 1;
+test_void_pointer = test_pointer_to_char;
+
+test_void_pointer := 0x7ffcd50d9da4. // memory address of the cell which is 1 cell to the right of test_char
+
+--------------------------------
+
+Two-Dimensional Rectangular Array named B:
+
+B[0][0] := 1. // at memory address 0x5634ccf51500
+B[0][1] := 2. // at memory address 0x5634ccf51504
+B[0][2] := 3. // at memory address 0x5634ccf51508
+B[0][3] := 4. // at memory address 0x5634ccf5150c
+B[0][4] := 5. // at memory address 0x5634ccf51510
+B[0][5] := 6. // at memory address 0x5634ccf51514
+B[0][6] := 7. // at memory address 0x5634ccf51518
+B[0][7] := 8. // at memory address 0x5634ccf5151c
+B[0][8] := 9. // at memory address 0x5634ccf51520
+B[0][9] := 10. // at memory address 0x5634ccf51524
+B[1][0] := 11. // at memory address 0x5634ccf51530
+B[1][1] := 12. // at memory address 0x5634ccf51534
+B[1][2] := 13. // at memory address 0x5634ccf51538
+B[1][3] := 14. // at memory address 0x5634ccf5153c
+B[1][4] := 15. // at memory address 0x5634ccf51540
+B[1][5] := 16. // at memory address 0x5634ccf51544
+B[1][6] := 17. // at memory address 0x5634ccf51548
+B[1][7] := 18. // at memory address 0x5634ccf5154c
+B[1][8] := 19. // at memory address 0x5634ccf51550
+B[1][9] := 20. // at memory address 0x5634ccf51554
+B[2][0] := 21. // at memory address 0x5634ccf51560
+B[2][1] := 22. // at memory address 0x5634ccf51564
+B[2][2] := 23. // at memory address 0x5634ccf51568
+B[2][3] := 24. // at memory address 0x5634ccf5156c
+B[2][4] := 25. // at memory address 0x5634ccf51570
+B[2][5] := 26. // at memory address 0x5634ccf51574
+B[2][6] := 27. // at memory address 0x5634ccf51578
+B[2][7] := 28. // at memory address 0x5634ccf5157c
+B[2][8] := 29. // at memory address 0x5634ccf51580
+B[2][9] := 30. // at memory address 0x5634ccf51584
+B[3][0] := 31. // at memory address 0x5634ccf51590
+B[3][1] := 32. // at memory address 0x5634ccf51594
+B[3][2] := 33. // at memory address 0x5634ccf51598
+B[3][3] := 34. // at memory address 0x5634ccf5159c
+B[3][4] := 35. // at memory address 0x5634ccf515a0
+B[3][5] := 36. // at memory address 0x5634ccf515a4
+B[3][6] := 37. // at memory address 0x5634ccf515a8
+B[3][7] := 38. // at memory address 0x5634ccf515ac
+B[3][8] := 39. // at memory address 0x5634ccf515b0
+B[3][9] := 40. // at memory address 0x5634ccf515b4
+
+// De-allocate the memory which was used to dynamically instantiate the two-dimensional array named B.
+for (i = 0; i < 4; i += 1) delete [] B[i];
+
+--------------------------------
+
+The value which was entered for N is 100.
+
+N := 100.
+
+--------------------------------
+
+The value which was entered for S is 1000.
+
+S := 1000.
+
+--------------------------------
+
+// Allocate exactly N contiguous int-sized blocks of memory and store the address of the first memory cell of that array in the pointer variable named A.
+A = new int[N];
+
+/**
+ * Seed the pseudo random number generator with the integer number of seconds which have elapsed since the Unix Epoch (i.e. midnight of 01_JANUARY_1970).
+ * Seed the pseudo random number generator exactly one time during this program instance.
+ */
+srand(time(NULL));
+
+/**
+ * For each element A[i] of the one-dimensional int array pointed to by A,
+ * generate a (relatively) random integer no smaller than 0 and no larger than (S - 1)
+ * and store that integer in A[i].
+ */
+for (i = 0; i < N; i += 1) A[i] = rand() % S;
+
+A[0] := 221. // memory address of A[0] is 0x5634ccf519d0.
+A[1] := 200. // memory address of A[1] is 0x5634ccf519d4.
+A[2] := 755. // memory address of A[2] is 0x5634ccf519d8.
+A[3] := 672. // memory address of A[3] is 0x5634ccf519dc.
+A[4] := 970. // memory address of A[4] is 0x5634ccf519e0.
+A[5] := 39. // memory address of A[5] is 0x5634ccf519e4.
+A[6] := 542. // memory address of A[6] is 0x5634ccf519e8.
+A[7] := 9. // memory address of A[7] is 0x5634ccf519ec.
+A[8] := 17. // memory address of A[8] is 0x5634ccf519f0.
+A[9] := 292. // memory address of A[9] is 0x5634ccf519f4.
+A[10] := 858. // memory address of A[10] is 0x5634ccf519f8.
+A[11] := 437. // memory address of A[11] is 0x5634ccf519fc.
+A[12] := 469. // memory address of A[12] is 0x5634ccf51a00.
+A[13] := 154. // memory address of A[13] is 0x5634ccf51a04.
+A[14] := 485. // memory address of A[14] is 0x5634ccf51a08.
+A[15] := 921. // memory address of A[15] is 0x5634ccf51a0c.
+A[16] := 432. // memory address of A[16] is 0x5634ccf51a10.
+A[17] := 816. // memory address of A[17] is 0x5634ccf51a14.
+A[18] := 123. // memory address of A[18] is 0x5634ccf51a18.
+A[19] := 979. // memory address of A[19] is 0x5634ccf51a1c.
+A[20] := 663. // memory address of A[20] is 0x5634ccf51a20.
+A[21] := 517. // memory address of A[21] is 0x5634ccf51a24.
+A[22] := 832. // memory address of A[22] is 0x5634ccf51a28.
+A[23] := 636. // memory address of A[23] is 0x5634ccf51a2c.
+A[24] := 935. // memory address of A[24] is 0x5634ccf51a30.
+A[25] := 190. // memory address of A[25] is 0x5634ccf51a34.
+A[26] := 330. // memory address of A[26] is 0x5634ccf51a38.
+A[27] := 411. // memory address of A[27] is 0x5634ccf51a3c.
+A[28] := 124. // memory address of A[28] is 0x5634ccf51a40.
+A[29] := 74. // memory address of A[29] is 0x5634ccf51a44.
+A[30] := 289. // memory address of A[30] is 0x5634ccf51a48.
+A[31] := 697. // memory address of A[31] is 0x5634ccf51a4c.
+A[32] := 275. // memory address of A[32] is 0x5634ccf51a50.
+A[33] := 45. // memory address of A[33] is 0x5634ccf51a54.
+A[34] := 721. // memory address of A[34] is 0x5634ccf51a58.
+A[35] := 597. // memory address of A[35] is 0x5634ccf51a5c.
+A[36] := 436. // memory address of A[36] is 0x5634ccf51a60.
+A[37] := 263. // memory address of A[37] is 0x5634ccf51a64.
+A[38] := 607. // memory address of A[38] is 0x5634ccf51a68.
+A[39] := 453. // memory address of A[39] is 0x5634ccf51a6c.
+A[40] := 555. // memory address of A[40] is 0x5634ccf51a70.
+A[41] := 817. // memory address of A[41] is 0x5634ccf51a74.
+A[42] := 243. // memory address of A[42] is 0x5634ccf51a78.
+A[43] := 376. // memory address of A[43] is 0x5634ccf51a7c.
+A[44] := 971. // memory address of A[44] is 0x5634ccf51a80.
+A[45] := 728. // memory address of A[45] is 0x5634ccf51a84.
+A[46] := 297. // memory address of A[46] is 0x5634ccf51a88.
+A[47] := 755. // memory address of A[47] is 0x5634ccf51a8c.
+A[48] := 896. // memory address of A[48] is 0x5634ccf51a90.
+A[49] := 772. // memory address of A[49] is 0x5634ccf51a94.
+A[50] := 87. // memory address of A[50] is 0x5634ccf51a98.
+A[51] := 559. // memory address of A[51] is 0x5634ccf51a9c.
+A[52] := 290. // memory address of A[52] is 0x5634ccf51aa0.
+A[53] := 919. // memory address of A[53] is 0x5634ccf51aa4.
+A[54] := 195. // memory address of A[54] is 0x5634ccf51aa8.
+A[55] := 577. // memory address of A[55] is 0x5634ccf51aac.
+A[56] := 109. // memory address of A[56] is 0x5634ccf51ab0.
+A[57] := 878. // memory address of A[57] is 0x5634ccf51ab4.
+A[58] := 988. // memory address of A[58] is 0x5634ccf51ab8.
+A[59] := 585. // memory address of A[59] is 0x5634ccf51abc.
+A[60] := 952. // memory address of A[60] is 0x5634ccf51ac0.
+A[61] := 629. // memory address of A[61] is 0x5634ccf51ac4.
+A[62] := 634. // memory address of A[62] is 0x5634ccf51ac8.
+A[63] := 579. // memory address of A[63] is 0x5634ccf51acc.
+A[64] := 26. // memory address of A[64] is 0x5634ccf51ad0.
+A[65] := 355. // memory address of A[65] is 0x5634ccf51ad4.
+A[66] := 529. // memory address of A[66] is 0x5634ccf51ad8.
+A[67] := 462. // memory address of A[67] is 0x5634ccf51adc.
+A[68] := 970. // memory address of A[68] is 0x5634ccf51ae0.
+A[69] := 136. // memory address of A[69] is 0x5634ccf51ae4.
+A[70] := 916. // memory address of A[70] is 0x5634ccf51ae8.
+A[71] := 526. // memory address of A[71] is 0x5634ccf51aec.
+A[72] := 305. // memory address of A[72] is 0x5634ccf51af0.
+A[73] := 159. // memory address of A[73] is 0x5634ccf51af4.
+A[74] := 902. // memory address of A[74] is 0x5634ccf51af8.
+A[75] := 628. // memory address of A[75] is 0x5634ccf51afc.
+A[76] := 239. // memory address of A[76] is 0x5634ccf51b00.
+A[77] := 552. // memory address of A[77] is 0x5634ccf51b04.
+A[78] := 383. // memory address of A[78] is 0x5634ccf51b08.
+A[79] := 136. // memory address of A[79] is 0x5634ccf51b0c.
+A[80] := 324. // memory address of A[80] is 0x5634ccf51b10.
+A[81] := 470. // memory address of A[81] is 0x5634ccf51b14.
+A[82] := 47. // memory address of A[82] is 0x5634ccf51b18.
+A[83] := 966. // memory address of A[83] is 0x5634ccf51b1c.
+A[84] := 742. // memory address of A[84] is 0x5634ccf51b20.
+A[85] := 595. // memory address of A[85] is 0x5634ccf51b24.
+A[86] := 543. // memory address of A[86] is 0x5634ccf51b28.
+A[87] := 203. // memory address of A[87] is 0x5634ccf51b2c.
+A[88] := 825. // memory address of A[88] is 0x5634ccf51b30.
+A[89] := 883. // memory address of A[89] is 0x5634ccf51b34.
+A[90] := 789. // memory address of A[90] is 0x5634ccf51b38.
+A[91] := 777. // memory address of A[91] is 0x5634ccf51b3c.
+A[92] := 513. // memory address of A[92] is 0x5634ccf51b40.
+A[93] := 423. // memory address of A[93] is 0x5634ccf51b44.
+A[94] := 709. // memory address of A[94] is 0x5634ccf51b48.
+A[95] := 891. // memory address of A[95] is 0x5634ccf51b4c.
+A[96] := 131. // memory address of A[96] is 0x5634ccf51b50.
+A[97] := 238. // memory address of A[97] is 0x5634ccf51b54.
+A[98] := 354. // memory address of A[98] is 0x5634ccf51b58.
+A[99] := 101. // memory address of A[99] is 0x5634ccf51b5c.
+
+// Sort the integer values stored in array A in ascending order.
+bubble_sort(A, N);
+
+A[0] := 9. // memory address of A[0] is 0x5634ccf51b60.
+A[1] := 17. // memory address of A[1] is 0x5634ccf51b64.
+A[2] := 26. // memory address of A[2] is 0x5634ccf51b68.
+A[3] := 39. // memory address of A[3] is 0x5634ccf51b6c.
+A[4] := 45. // memory address of A[4] is 0x5634ccf51b70.
+A[5] := 47. // memory address of A[5] is 0x5634ccf51b74.
+A[6] := 74. // memory address of A[6] is 0x5634ccf51b78.
+A[7] := 87. // memory address of A[7] is 0x5634ccf51b7c.
+A[8] := 101. // memory address of A[8] is 0x5634ccf51b80.
+A[9] := 109. // memory address of A[9] is 0x5634ccf51b84.
+A[10] := 123. // memory address of A[10] is 0x5634ccf51b88.
+A[11] := 124. // memory address of A[11] is 0x5634ccf51b8c.
+A[12] := 131. // memory address of A[12] is 0x5634ccf51b90.
+A[13] := 136. // memory address of A[13] is 0x5634ccf51b94.
+A[14] := 136. // memory address of A[14] is 0x5634ccf51b98.
+A[15] := 154. // memory address of A[15] is 0x5634ccf51b9c.
+A[16] := 159. // memory address of A[16] is 0x5634ccf51ba0.
+A[17] := 190. // memory address of A[17] is 0x5634ccf51ba4.
+A[18] := 195. // memory address of A[18] is 0x5634ccf51ba8.
+A[19] := 200. // memory address of A[19] is 0x5634ccf51bac.
+A[20] := 203. // memory address of A[20] is 0x5634ccf51bb0.
+A[21] := 221. // memory address of A[21] is 0x5634ccf51bb4.
+A[22] := 238. // memory address of A[22] is 0x5634ccf51bb8.
+A[23] := 239. // memory address of A[23] is 0x5634ccf51bbc.
+A[24] := 243. // memory address of A[24] is 0x5634ccf51bc0.
+A[25] := 263. // memory address of A[25] is 0x5634ccf51bc4.
+A[26] := 275. // memory address of A[26] is 0x5634ccf51bc8.
+A[27] := 289. // memory address of A[27] is 0x5634ccf51bcc.
+A[28] := 290. // memory address of A[28] is 0x5634ccf51bd0.
+A[29] := 292. // memory address of A[29] is 0x5634ccf51bd4.
+A[30] := 297. // memory address of A[30] is 0x5634ccf51bd8.
+A[31] := 305. // memory address of A[31] is 0x5634ccf51bdc.
+A[32] := 324. // memory address of A[32] is 0x5634ccf51be0.
+A[33] := 330. // memory address of A[33] is 0x5634ccf51be4.
+A[34] := 354. // memory address of A[34] is 0x5634ccf51be8.
+A[35] := 355. // memory address of A[35] is 0x5634ccf51bec.
+A[36] := 376. // memory address of A[36] is 0x5634ccf51bf0.
+A[37] := 383. // memory address of A[37] is 0x5634ccf51bf4.
+A[38] := 411. // memory address of A[38] is 0x5634ccf51bf8.
+A[39] := 423. // memory address of A[39] is 0x5634ccf51bfc.
+A[40] := 432. // memory address of A[40] is 0x5634ccf51c00.
+A[41] := 436. // memory address of A[41] is 0x5634ccf51c04.
+A[42] := 437. // memory address of A[42] is 0x5634ccf51c08.
+A[43] := 453. // memory address of A[43] is 0x5634ccf51c0c.
+A[44] := 462. // memory address of A[44] is 0x5634ccf51c10.
+A[45] := 469. // memory address of A[45] is 0x5634ccf51c14.
+A[46] := 470. // memory address of A[46] is 0x5634ccf51c18.
+A[47] := 485. // memory address of A[47] is 0x5634ccf51c1c.
+A[48] := 513. // memory address of A[48] is 0x5634ccf51c20.
+A[49] := 517. // memory address of A[49] is 0x5634ccf51c24.
+A[50] := 526. // memory address of A[50] is 0x5634ccf51c28.
+A[51] := 529. // memory address of A[51] is 0x5634ccf51c2c.
+A[52] := 542. // memory address of A[52] is 0x5634ccf51c30.
+A[53] := 543. // memory address of A[53] is 0x5634ccf51c34.
+A[54] := 552. // memory address of A[54] is 0x5634ccf51c38.
+A[55] := 555. // memory address of A[55] is 0x5634ccf51c3c.
+A[56] := 559. // memory address of A[56] is 0x5634ccf51c40.
+A[57] := 577. // memory address of A[57] is 0x5634ccf51c44.
+A[58] := 579. // memory address of A[58] is 0x5634ccf51c48.
+A[59] := 585. // memory address of A[59] is 0x5634ccf51c4c.
+A[60] := 595. // memory address of A[60] is 0x5634ccf51c50.
+A[61] := 597. // memory address of A[61] is 0x5634ccf51c54.
+A[62] := 607. // memory address of A[62] is 0x5634ccf51c58.
+A[63] := 628. // memory address of A[63] is 0x5634ccf51c5c.
+A[64] := 629. // memory address of A[64] is 0x5634ccf51c60.
+A[65] := 634. // memory address of A[65] is 0x5634ccf51c64.
+A[66] := 636. // memory address of A[66] is 0x5634ccf51c68.
+A[67] := 663. // memory address of A[67] is 0x5634ccf51c6c.
+A[68] := 672. // memory address of A[68] is 0x5634ccf51c70.
+A[69] := 697. // memory address of A[69] is 0x5634ccf51c74.
+A[70] := 709. // memory address of A[70] is 0x5634ccf51c78.
+A[71] := 721. // memory address of A[71] is 0x5634ccf51c7c.
+A[72] := 728. // memory address of A[72] is 0x5634ccf51c80.
+A[73] := 742. // memory address of A[73] is 0x5634ccf51c84.
+A[74] := 755. // memory address of A[74] is 0x5634ccf51c88.
+A[75] := 755. // memory address of A[75] is 0x5634ccf51c8c.
+A[76] := 772. // memory address of A[76] is 0x5634ccf51c90.
+A[77] := 777. // memory address of A[77] is 0x5634ccf51c94.
+A[78] := 789. // memory address of A[78] is 0x5634ccf51c98.
+A[79] := 816. // memory address of A[79] is 0x5634ccf51c9c.
+A[80] := 817. // memory address of A[80] is 0x5634ccf51ca0.
+A[81] := 825. // memory address of A[81] is 0x5634ccf51ca4.
+A[82] := 832. // memory address of A[82] is 0x5634ccf51ca8.
+A[83] := 858. // memory address of A[83] is 0x5634ccf51cac.
+A[84] := 878. // memory address of A[84] is 0x5634ccf51cb0.
+A[85] := 883. // memory address of A[85] is 0x5634ccf51cb4.
+A[86] := 891. // memory address of A[86] is 0x5634ccf51cb8.
+A[87] := 896. // memory address of A[87] is 0x5634ccf51cbc.
+A[88] := 902. // memory address of A[88] is 0x5634ccf51cc0.
+A[89] := 916. // memory address of A[89] is 0x5634ccf51cc4.
+A[90] := 919. // memory address of A[90] is 0x5634ccf51cc8.
+A[91] := 921. // memory address of A[91] is 0x5634ccf51ccc.
+A[92] := 935. // memory address of A[92] is 0x5634ccf51cd0.
+A[93] := 952. // memory address of A[93] is 0x5634ccf51cd4.
+A[94] := 966. // memory address of A[94] is 0x5634ccf51cd8.
+A[95] := 970. // memory address of A[95] is 0x5634ccf51cdc.
+A[96] := 970. // memory address of A[96] is 0x5634ccf51ce0.
+A[97] := 971. // memory address of A[97] is 0x5634ccf51ce4.
+A[98] := 979. // memory address of A[98] is 0x5634ccf51ce8.
+A[99] := 988. // memory address of A[99] is 0x5634ccf51cec.
+
+--------------------------------
+
+// De-allocate the memory which was allocated to the dynamic array whose first element memory address is stored in A.
+delete [] A;
+
+--------------------------------
+End Of Program
+--------------------------------

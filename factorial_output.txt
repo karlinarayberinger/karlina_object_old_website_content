@@ -1,0 +1,41 @@
+--------------------------------
+Start Of Program
+--------------------------------
+
+The value which was entered for N is 7.
+
+N := 7.
+
+--------------------------------
+
+Computing factorial N using recursion:
+
+factorial(7) = 7 * factorial(6). // recursive case
+
+factorial(6) = 6 * factorial(5). // recursive case
+
+factorial(5) = 5 * factorial(4). // recursive case
+
+factorial(4) = 4 * factorial(3). // recursive case
+
+factorial(3) = 3 * factorial(2). // recursive case
+
+factorial(2) = 2 * factorial(1). // recursive case
+
+factorial(1) = 1 * factorial(0). // recursive case
+
+factorial(0) = 1. // base case
+
+A := factorial(7) = 5040. // 7! := 5040.
+
+--------------------------------
+
+Computing factorial N using iteration:
+
+factorial(7) = 7 * 6 * 5 * 4 * 3 * 2 * 1 * 1.
+
+B := factorial(7) = 5040. // 7! := 5040.
+
+--------------------------------
+End Of Program
+--------------------------------

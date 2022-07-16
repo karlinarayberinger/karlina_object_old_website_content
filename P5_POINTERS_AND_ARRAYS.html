@@ -1,0 +1,957 @@
+<hr>
+<p><strong>POINTERS_AND_ARRAYS</strong></p>
+<hr>
+<p><span style="background:#ffff00;">The C++ program featured in this tutorial web page illustrates how pointer variables work and how pointers can be used to represent arrays. A <strong>pointer</strong> is a variable which stores the memory address of a variable. An <strong>array</strong> is data structure comprised of some natural number of contiguous equally-sized chunks of memory.</span></p>
+<p><strong><em>To view hidden text inside of the preformatted text boxes below, scroll horizontally.</em></strong></p>
+<hr>
+<p><strong>Software Application Files</strong></p>
+<hr>
+<p>C++ source file: <a style="background:#000000;color:#00ff00;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays.cpp" target="_blank" rel="noopener">https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays.cpp</a></p>
+<p>plain-text file: <a style="background:#000000;color:#ff9000;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays_output.txt" target="_blank" rel="noopener">https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays_output.txt</a></p>
+<hr>
+<p><strong>Program Compilation &amp; Execution</strong></p>
+<hr>
+<p>STEP_0: Copy and paste the C++ <a style="background:#000000;color:#00ff00;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays.cpp" target="_blank" rel="noopener">source code</a> into a new text editor document and save that document as the following file name:</p>
+<pre>pointers_and_arrays.cpp</pre>
+<p>STEP_1: Open a Unix command line terminal application and set the current directory to wherever the C++ is located on the local machine (e.g. Desktop).</p>
+<pre>cd Desktop</pre>
+<p>STEP_2: Compile the C++ file into machine-executable instructions (i.e. object file) and then into an executable piece of software named <strong>app</strong> using the following command:</p>
+<pre>g++ pointers_and_arrays.cpp -o app</pre>
+<p>STEP_3: If the program compilation command does not work, then use the following command to install the C++ compiler:</p>
+<pre>sudo apt install build-essential</pre>
+<p>STEP_4: After running the <strong>g++</strong> command, run the executable file using the following command:</p>
+<pre>./app</pre>
+<p>STEP_5: Once the application is running, the following prompt will appear:</p>
+<pre>Enter a natural number which is no larger than 1000 to store in the int type variable named N:</pre>
+<p>STEP_6: Enter a value for N using the using the keyboard.</p>
+<p>STEP_7: After a value for N is submitted, the following prompt will appear:</p>
+<pre>Enter a natural number which is no larger than 1000 to store in the int type variable named S:</pre>
+<p>STEP_8: Enter a value for S using the using the keyboard.</p>
+<p>STEP_9: Observe program results on the command line terminal and in the <a style="background:#000000;color:#ff9000;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays_output.txt" target="_blank" rel="noopener">output file</a>.</p>
+<hr>
+<p><strong>Program Source Code</strong></p>
+<hr>
+<p>C++ source file: <a style="background:#000000;color:#00ff00;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays.cpp" target="_blank" rel="noopener">https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays.cpp</a></p>
+<p><strong><em>When copy-pasting the source code from the preformatted text box below into a text editor document, remove the spaces between the angle brackets and the library names in the preprocessing directives code block.</em></strong></p>
+<hr>
+<pre>/**
+ * file: pointers_and_arrays.cpp
+ * type: C++ (source file)
+ * author: Karlina Ray Beringer 
+ * date: 05_MAY_2022
+ */
+
+/* preprocessing directives */
+#include &lt; iostream &gt; // standard input and output operations (command line terminal and keyboard)
+#include &lt; fstream &gt; // file input and output operations (text file generation)
+#include &lt; stdio.h &gt; // library which contains NULL macro
+#include &lt; stdlib.h &gt; // library for srand() and rand() functions
+#include &lt; time.h &gt; // library for time() function
+#define MAXIMUM_N 1000 // upper limit constant for values of N (and N represents the number of array elements to assign to a dynamic array named A)
+#define MAXIMUM_S 1000 // upper limit constant for values of S (and S represents the number of unique states which each element of A can represent)
+
+/* function prototypes */
+void bubble_sort(int * A, int N);
+int ** generate_two_dimensional_rectangular_array_of_integers(int number_of_rows, int number_of_columns);
+
+/**
+ * Use the Bubble Sort sorting algorithm to arrange the elements of array A in ascending order.
+ * 
+ * Note that, even though this function returns nothing, the array pointer which is passed in as a function parameter is updated.
+ * 
+ * Assume that there are at least N consecutive int-sized chunks of memory allocated to array A
+ * (and that N is a natural number no larger than MAXIMUM_N).
+ */
+void bubble_sort(int * A, int N)
+{
+    int i = 0, placeholder = 0; 
+    if (!A || (N &lt; 1) || (N &gt; MAXIMUM_N)) return;
+    bool array_is_sorted = false, adjacent_elements_were_swapped = false;
+    while (!array_is_sorted)
+    {
+        adjacent_elements_were_swapped = false;
+        for (i = 1; i &lt; N; i += 1)
+        {
+            if (A[i] &lt; A[i - 1])
+            {
+                placeholder = A[i];
+                A[i] = A[i - 1];
+                A[i - 1] = placeholder;
+                adjacent_elements_were_swapped = true;
+            }
+        }
+        if (!adjacent_elements_were_swapped) array_is_sorted = true;
+    }
+}
+
+/**
+ * Dynamically instantiate a two-dimensional array which resembles a rectangular grid.
+ * 
+ * The memory address returned by this function is a pointer to a pointer to an int type variable.
+ * 
+ * The memory address returned by this function is the first element of an array comprised of 
+ * number_of_rows one-dimensional arrays which are each number_of_columns in length.
+ * 
+ * Note that, because the two-dimensional array was allocated memory during runtime rather than at compile time,
+ * the two-dimensional array will need to be de-allocated so that the computer can re-use that memory.
+ * (Dynamic variables are not automatically deleted when the program terminates).
+ * 
+ * Assume that number_of_rows is a natural number and that number_of_columns is a natural number.
+ */
+int ** generate_two_dimensional_rectangular_array_of_integers(int number_of_rows, int number_of_columns)
+{
+    int i = 0, k = 0, value = 0;
+    int ** rectangular_array = new int * [number_of_rows];
+    for (i = 0; i &lt; number_of_rows; i += 1) rectangular_array[i] = new int [number_of_columns];
+    for (i = 0; i &lt; number_of_rows; i += 1) 
+    {
+        for (k = 0; k &lt; number_of_columns; k += 1) 
+        {
+            value += 1;
+            rectangular_array[i][k] = value;
+        }
+    }
+    return rectangular_array;
+}
+
+/* program entry point */
+int main()
+{
+    // Declare four int type variables and set each of their initial values to 0.
+    int N = 0, S = 0, i = 0, k = 0;
+
+    /**
+     * Declare an (int *)-type variable (i.e. pointer-to-int).
+     * 
+     * A will store the address of the first memory cell of N contiguous
+     * int-sized memory blocks (and each one of the N int-sized memory 
+     * blocks is comprised of 4 contiguous byte-sized memory cells).
+     * 
+     * Such an array is a dynamic variable because it is instantiated 
+     * during program runtime rather than during program compile time.
+     * 
+     * Because the array pointed to by A is dynamically allocated, the computer 
+     * does not know how much memory will be allocated to the array represented by 
+     * the pointer named A until after the user eneters a value for N 
+     * (and N is the number of elements in that array).
+     * 
+     * A will point to the first element of a one-dimensional array comrpised
+     * of exactly N int-type elements.
+     */
+    int * A; // random integers array
+
+    /**
+     * Declare a pointer to a pointer-to-int type variable.
+     * 
+     * B will be used to represent a dynamically-allocated two-dimensional array 
+     * whose length is some natural number named R and where each one of the R array 
+     * elements is some one-dimensional array whose length is some natural number named C.
+     * 
+     * R represents the number of rows which are in the rectangular array pointed to by B.
+     * 
+     * C represents the number of columns which are in the rectangular array pointed to by B.
+     * 
+     * The total number of int-type elements which are in the array pointed to by B is
+     * the product of R and C (i.e. the integer which is produced by multiplying R and C).
+     */
+    int ** B; // rectangular array
+
+    // Declare a file output stream object.
+    std::ofstream file;
+
+    /**
+     * If pointers_and_arrays_output.txt does not already exist in the same directory as pointers_and_arrays.cpp, 
+     * then create a new file named pointers_and_arrays_output.txt.
+     * 
+     * Then open the plain-text file named factorial_output.txt 
+     * and set that file to be overwritten with program data.
+     */
+    file.open("pointers_and_arrays_output.txt");
+
+    // Print an opening message to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+    std::cout &lt;&lt; "\nStart Of Program";
+    std::cout &lt;&lt; "\n--------------------------------";
+
+    // Print an opening message to the file output stream.
+    file &lt;&lt; "--------------------------------";
+    file &lt;&lt; "\nStart Of Program";
+    file &lt;&lt; "\n--------------------------------";
+
+    // Print the data size of various C++ data types to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Print the data size of various C++ data types to the file output stream.";
+    std::cout &lt;&lt; "\nsizeof(bool) := " &lt;&lt; sizeof(bool) &lt;&lt; ". // number of contiguous byte-sized memory cells which a bool type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(char) := " &lt;&lt; sizeof(char) &lt;&lt; ". // number of contiguous byte-sized memory cells which a char type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(int) := " &lt;&lt; sizeof(int) &lt;&lt; ". // number of contiguous byte-sized memory cells which an int type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(float) := " &lt;&lt; sizeof(float) &lt;&lt; ". // number of contiguous byte-sized memory cells which a float type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(double) := " &lt;&lt; sizeof(double) &lt;&lt; ". // number of contiguous byte-sized memory cells which a double type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(bool *) := " &lt;&lt; sizeof(bool *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-bool type variable occupies ";
+    std::cout &lt;&lt; "\nsizeof(char *) := " &lt;&lt; sizeof(char *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-char type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(int *) := " &lt;&lt; sizeof(int *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-int type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(int **) := " &lt;&lt; sizeof(int **) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-pointer-to-int type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(float *) := " &lt;&lt; sizeof(float *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-float type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(double *) := " &lt;&lt; sizeof(double *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-double type variable occupies";
+    std::cout &lt;&lt; "\nsizeof(void *) := " &lt;&lt; sizeof(void *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a void pointer (datatype independent pointer) occupies.";
+
+    // Print the data size of various C++ data types to the file output stream.
+    file &lt;&lt; "\n\n// Print the data size of various C++ data types to the file output stream.";
+    file &lt;&lt; "\nsizeof(bool) := " &lt;&lt; sizeof(bool) &lt;&lt; ". // number of contiguous byte-sized memory cells which a bool type variable occupies";
+    file &lt;&lt; "\nsizeof(char) := " &lt;&lt; sizeof(char) &lt;&lt; ". // number of contiguous byte-sized memory cells which a char type variable occupies";
+    file &lt;&lt; "\nsizeof(int) := " &lt;&lt; sizeof(int) &lt;&lt; ". // number of contiguous byte-sized memory cells which an int type variable occupies";
+    file &lt;&lt; "\nsizeof(float) := " &lt;&lt; sizeof(float) &lt;&lt; ". // number of contiguous byte-sized memory cells which a float type variable occupies";
+    file &lt;&lt; "\nsizeof(double) := " &lt;&lt; sizeof(double) &lt;&lt; ". // number of contiguous byte-sized memory cells which a double type variable occupies";
+    file &lt;&lt; "\nsizeof(bool *) := " &lt;&lt; sizeof(bool *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-bool type variable occupies ";
+    file &lt;&lt; "\nsizeof(char *) := " &lt;&lt; sizeof(char *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-char type variable occupies";
+    file &lt;&lt; "\nsizeof(int *) := " &lt;&lt; sizeof(int *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-int type variable occupies";
+    file &lt;&lt; "\nsizeof(int **) := " &lt;&lt; sizeof(int **) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-pointer-to-int type variable occupies";
+    file &lt;&lt; "\nsizeof(float *) := " &lt;&lt; sizeof(float *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-float type variable occupies";
+    file &lt;&lt; "\nsizeof(double *) := " &lt;&lt; sizeof(double *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a pointer-to-double type variable occupies";
+    file &lt;&lt; "\nsizeof(void *) := " &lt;&lt; sizeof(void *) &lt;&lt; ". // number of contiguous byte-sized memory cells which a void pointer (datatype independent pointer) occupies.";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Declare an int type variable which will be used to demonstrate how C++ pointers work.
+    int test_int = 25;
+
+    // Print the "int test_int = 25;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Declare an int type variable which will be used to demonstrate how C++ pointers work.";
+    std::cout &lt;&lt; "\nint test_int = 25;";
+
+    // Print the "int test_int = 25;" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Declare an int type variable which will be used to demonstrate how C++ pointers work.";
+    file &lt;&lt; "\nint test_int = 25;";
+
+    // Declare a pointer which stores the address of the first cell of an int-sized block of memory.
+    // (Note that intializing pointers to NULL prevents those variables from being set to "garbage" data).
+    int * test_pointer_to_int = NULL;
+
+    // Print the "int * test_pointer_to_int = NULL;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Declare a pointer which stores the address of the first cell of an int-sized block of memory.";
+    std::cout &lt;&lt; "\n// (Note that intializing pointers to NULL prevents those variables from being set to \"garbage\" data).";
+    std::cout &lt;&lt; "\nint * test_pointer_to_int = NULL;";
+
+    // Print the "int * test_pointer_to_int = NULL;" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Declare a pointer which stores the address of the first cell of an int-sized block of memory.";
+    file &lt;&lt; "\n// (Note that intializing pointers to NULL prevents those variables from being set to \"garbage\" data).";
+    file &lt;&lt; "\nint * test_pointer_to_int = NULL;";
+
+    // Store the address of test_int in test_pointer_to_int using the reference (&amp;) operator.
+    test_pointer_to_int = &amp;test_int;
+
+    // Print the "test_pointer_to_int = &amp;test_int;" insruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Store the address of test_int in test_pointer_to_int using the reference (&amp;) operator.";
+    std::cout &lt;&lt; "\ntest_pointer_to_int = &amp;test_int;";
+
+    // Print the "test_pointer_to_int = &amp;test_int;" insruction to the file output stream.
+    file &lt;&lt; "\n\n// Store the address of test_int in test_pointer_to_int using the reference (&amp;) operator.";
+    file &lt;&lt; "\ntest_pointer_to_int = &amp;test_int;";
+
+    // Print "test_pointer_to_int := {test_pointer_to_int}." to the command line terminal.
+    std::cout &lt;&lt; "\n\ntest_pointer_to_int := " &lt;&lt; test_pointer_to_int &lt;&lt; ". // memory address of test_int";
+
+    // Print "test_pointer_to_int := {test_pointer_to_int}." to the file output stream.
+    std::cout &lt;&lt; "\n\ntest_pointer_to_int := " &lt;&lt; test_pointer_to_int &lt;&lt; ". // memory address of test_int";
+
+    // Indirectly access the value stored in test_int using the dereference (*) operator and print the result to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Indirectly access the value stored in test_int using the dereference (*) operator.";
+    std::cout &lt;&lt; "\n* test_pointer_to_int = " &lt;&lt; * test_pointer_to_int &lt;&lt; ".";
+
+    // Indirectly access the value stored in test_int using the dereference (*) operator and print the result to the file output stream.
+    file &lt;&lt; "\n\n// Indirectly access the value stored in test_int using the dereference (*) operator.";
+    file &lt;&lt; "\n* test_pointer_to_int = " &lt;&lt; * test_pointer_to_int &lt;&lt; ".";
+
+    // Increment the value stored in test_pointer_to_int by one int-sized memory increment.
+    test_pointer_to_int += 1;
+
+    // Print the "test_pointer_to_int += 1;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Increment the value stored in test_pointer_to_int by one int-sized memory increment.";
+    std::cout &lt;&lt; "\ntest_pointer_to_int += 1;";
+
+    // Print the "test_pointer_to_int += 1;" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Increment the value stored in test_pointer_to_int by one int-sized memory increment.";
+    file &lt;&lt; "\ntest_pointer_to_int += 1;";
+
+    // Print "test_pointer_to_int := {test_pointer_to_int}." to the command line terminal.
+    std::cout &lt;&lt; "\n\ntest_pointer_to_int := " &lt;&lt; test_pointer_to_int &lt;&lt; ". // memory address of the cell which is 4 cells to the right of test_int";
+
+    // Print "test_pointer_to_int := {test_pointer_to_int}." to the file output stream.
+    file &lt;&lt; "\n\ntest_pointer_to_int := " &lt;&lt; test_pointer_to_int &lt;&lt; ". // memory address of the cell which is 4 cells to the right of test_int";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Declare an char type variable which will be used to demonstrate how C++ pointers work.
+    char test_char = 'K';
+
+    // Print the "char test_char = 'K';" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Declare an char type variable which will be used to demonstrate how C++ pointers work.";
+    std::cout &lt;&lt; "\nchar test_char = 'K';";
+
+    // Print the "char test_char = 'K';" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Declare an char type variable which will be used to demonstrate how C++ pointers work.";
+    file &lt;&lt; "\nchar test_char = 'K';";
+
+    // Declare a pointer which stores the address of the first cell of an char-sized block of memory.
+    // (Use malloc to assign memory to the pointer-to-char variable).
+    char * test_pointer_to_char = (char *) malloc(1);
+
+    // Print the "char * test_pointer_to_char = (char *) malloc(1);" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Declare a pointer which stores the address of the first cell of an char-sized block of memory.";
+    std::cout &lt;&lt; "\n// (Use malloc to assign memory to the pointer-to-char variable).";
+    std::cout &lt;&lt; "\nchar * test_pointer_to_char = (char *) malloc(1);";
+
+    // Print the "char * test_pointer_to_char = (char *) malloc(1);" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Declare a pointer which stores the address of the first cell of an char-sized block of memory.";
+    file &lt;&lt; "\n// (Use malloc to assign memory to the pointer-to-char variable).";
+    file &lt;&lt; "\nchar * test_pointer_to_char = (char *) malloc(1);";
+
+    // Declare a void pointer and initialize it to the value stored in test_pointer_to_char.
+    // (Unlike test_pointer_to_char, void_test_pointer will display the memory address that pointer stores to the output stream).
+    void * test_void_pointer = test_pointer_to_char;
+
+    // Print the "void * test_void_pointer = test_pointer_to_char;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Declare a void pointer and initialize it to the value stored in test_pointer_to_char.";
+    std::cout &lt;&lt; "\n// (Unlike test_pointer_to_char, void_test_pointer will display the memory address that pointer stores to the output stream).";
+    std::cout &lt;&lt; "\nvoid * test_void_pointer = test_pointer_to_char;";
+
+    // Print the "void * test_void_pointer = test_pointer_to_char;" instruction to the command line terminal.
+    file &lt;&lt; "\n\n// Declare a void pointer and initialize it to the value stored in test_pointer_to_char.";
+    file &lt;&lt; "\n// (Unlike test_pointer_to_char, void_test_pointer will display the memory address that pointer stores to the output stream).";
+    file &lt;&lt; "\nvoid * test_void_pointer = test_pointer_to_char;";
+
+    // Store the address of test_char in test_pointer_to_char using the reference (&amp;) operator.
+    test_pointer_to_char = &amp;test_char;
+    test_void_pointer = test_pointer_to_char;
+
+    // Print the "test_pointer_to_char = &amp;test_char;" insruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Store the address of test_char in test_pointer_to_char using the reference (&amp;) operator.";
+    std::cout &lt;&lt; "\ntest_pointer_to_char = &amp;test_char;";
+    std::cout &lt;&lt; "\ntest_void_pointer = test_pointer_to_char;";
+
+    // Print the "test_pointer_to_char = &amp;test_char;" insruction to the file output stream.
+    file &lt;&lt; "\n\n// Store the address of test_char in test_pointer_to_char using the reference (&amp;) operator.";
+    file &lt;&lt; "\ntest_pointer_to_char = &amp;test_char;";
+    file &lt;&lt; "\ntest_void_pointer = test_pointer_to_char;";
+
+    // Print "test_void_pointer := {test_void_pointer}." to the command line terminal.
+    std::cout &lt;&lt; "\n\ntest_void_pointer := " &lt;&lt; test_void_pointer &lt;&lt; ". // memory address of test_char";
+
+    // Print "test_void_pointer := {test_void_pointer}." to the file output stream.
+    file &lt;&lt; "\n\ntest_void_pointer := " &lt;&lt; test_void_pointer &lt;&lt; ". // memory address of test_char";
+
+    // Indirectly access the value stored in test_char using the dereference (*) operator and print the result to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Indirectly access the value stored in test_char using the dereference (*) operator.";
+    std::cout &lt;&lt; "\n* test_pointer_to_char = " &lt;&lt; * test_pointer_to_char &lt;&lt; ".";
+
+    // Indirectly access the value stored in test_char using the dereference (*) operator and print the result to the file output stream.
+    file &lt;&lt; "\n\n// Indirectly access the value stored in test_char using the dereference (*) operator.";
+    file &lt;&lt; "\n* test_pointer_to_char = " &lt;&lt; * test_pointer_to_char &lt;&lt; ".";
+
+    // Increment the value stored in test_pointer_to_int by one int-sized memory increment.
+    test_pointer_to_char += 1;
+    test_void_pointer = test_pointer_to_char;
+
+    // Print the "test_pointer_to_char += 1;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Increment the value stored in test_pointer_to_char by one char-sized memory increment.";
+    std::cout &lt;&lt; "\ntest_pointer_to_char += 1;";
+    std::cout &lt;&lt; "\ntest_void_pointer = test_pointer_to_char;";
+
+    // Print the "test_pointer_to_char += 1;" instruction to the file output stream.
+    file &lt;&lt; "\n\n// Increment the value stored in test_pointer_to_int by one char-sized memory increment.";
+    file &lt;&lt; "\ntest_pointer_to_char += 1;";
+    file &lt;&lt; "\ntest_void_pointer = test_pointer_to_char;";
+
+    // Print "test_void_pointer := {test_void_pointer}." to the command line terminal.
+    std::cout &lt;&lt; "\n\ntest_void_pointer:= " &lt;&lt; test_void_pointer &lt;&lt; ". // memory address of the cell which is 1 cell to the right of test_char";
+
+    // Print "test_void_pointer := {test_void_pointer}." to the file output stream.
+    file &lt;&lt; "\n\ntest_void_pointer := " &lt;&lt; test_void_pointer &lt;&lt; ". // memory address of the cell which is 1 cell to the right of test_char";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Generate a dynamic two-dimensional array which resembles a rectangle comprised of 4 rows and 10 columns.
+    B = generate_two_dimensional_rectangular_array_of_integers(4, 10);
+
+    // Print the "B = generate_two_dimensional_array_of_integers(4, 10);" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// Generate a dynamic two-dimensional array which resembles a rectangle comprised of 4 rows and 10 columns.";
+    std::cout &lt;&lt; "\nB = generate_two_dimensional_rectangular_array_of_integers(4, 10);";
+
+    // Print the "B = generate_two_dimensional_array_of_integers(4, 10);" instruction to the file output stream.
+    std::cout &lt;&lt; "\n\n// Generate a dynamic two-dimensional array which resembles a rectangle comprised of 4 rows and 10 columns.";
+    std::cout &lt;&lt; "\nB = generate_two_dimensional_rectangular_array_of_integers(4, 10);";
+
+    // Print the contents of the two-dimensional array pointed to by B as a one-dimensional list to the command line terminal and to the file output stream.
+    std::cout &lt;&lt; "\n\nTwo-Dimensional Rectangular Array named B:\n";
+    file &lt;&lt; "\n\nTwo-Dimensional Rectangular Array named B:\n";
+    for (i = 0; i &lt; 4; i += 1)
+    {
+        for (k = 0; k &lt; 10; k += 1)
+        {
+            std::cout &lt;&lt; "\nB[" &lt;&lt; i &lt;&lt; "][" &lt;&lt; k &lt;&lt; "] := " &lt;&lt; B[i][k] &lt;&lt; ". // at memory address " &lt;&lt; &amp;B[i][k];
+            file &lt;&lt; "\nB[" &lt;&lt; i &lt;&lt; "][" &lt;&lt; k &lt;&lt; "] := " &lt;&lt; B[i][k] &lt;&lt; ". // at memory address " &lt;&lt; &amp;B[i][k];
+        }
+    }
+
+    // De-allocate the memory which was used to dynamically instantiate the two-dimensional array named B.
+    for (i = 0; i &lt; 4; i += 1) delete [] B[i];
+
+    // Print the "for (i = 0; i &lt; 4; i += 1) delete [] B[i];" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// De-allocate the memory which was used to dynamically instantiate the two-dimensional array named B.";
+    std::cout &lt;&lt; "\nfor (i = 0; i &lt; 4; i += 1) delete [] B[i];";
+
+    // Print the "for (i = 0; i &lt; 4; i += 1) delete [] B[i];" instruction to the file output stream.
+    file &lt;&lt; "\n\n// De-allocate the memory which was used to dynamically instantiate the two-dimensional array named B.";
+    file &lt;&lt; "\nfor (i = 0; i &lt; 4; i += 1) delete [] B[i];";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Print "Enter a natural number which is no larger than {MAXIMUM_N}: " to the command line terminal.
+    std::cout &lt;&lt; "\n\nEnter a natural number which is no larger than " &lt;&lt; MAXIMUM_N &lt;&lt; " to store in the int type variable named N: ";
+
+    // Scan the command line terminal for the most recent keyboard input value.
+    std::cin &gt;&gt; N;
+
+    // Print "The value which was entered for N is {N}." to the command line terminal.
+    std::cout &lt;&lt; "\nThe value which was entered for N is " &lt;&lt; N &lt;&lt; ".";
+
+    // Print "The value which was entered for N is {N}." to the file output stream.
+    file &lt;&lt; "\n\nThe value which was entered for N is " &lt;&lt; N &lt;&lt; ".";
+
+    // If N is less than 1 or larger than MAXIMUM_N, then set N to 1.
+    N = ((N &lt; 1) || (N &gt; MAXIMUM_N)) ? 1 : N;
+
+    // Print "N := {N}." to the command line terminal.
+    std::cout &lt;&lt; "\n\nN := " &lt;&lt; N &lt;&lt; ".";
+
+    // Print "N := {N}." to the file output stream.
+    file &lt;&lt; "\n\nN := " &lt;&lt; N &lt;&lt; ".";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Print "Enter a natural number which is no larger than {MAXIMUM_S}: " to the command line terminal.
+    std::cout &lt;&lt; "\n\nEnter a natural number which is no larger than " &lt;&lt; MAXIMUM_S &lt;&lt; " to store in the int type variable named S: ";
+
+    // Scan the command line terminal for the most recent keyboard input value.
+    std::cin &gt;&gt; S;
+
+    // Print "The value which was entered for S is {S}." to the command line terminal.
+    std::cout &lt;&lt; "\nThe value which was entered for S is " &lt;&lt; S &lt;&lt; ".";
+
+    // Print "The value which was entered for S is {S}." to the file output stream.
+    file &lt;&lt; "\n\nThe value which was entered for S is " &lt;&lt; S &lt;&lt; ".";
+
+    // If S is less than 1 or larger than MAXIMUM_S, then set S to 1.
+    S = ((S &lt; 1) || (S &gt; MAXIMUM_S)) ? 1 : S;
+
+    // Print "S := {S}." to the command line terminal.
+    std::cout &lt;&lt; "\n\nS := " &lt;&lt; S &lt;&lt; ".";
+
+    // Print "S := {S}." to the file output stream.
+    file &lt;&lt; "\n\nS := " &lt;&lt; S &lt;&lt; ".";
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // Allocate exactly N contiguous int-sized blocks of memory and store the address of the first memory cell of that array in the pointer variable named A.
+    A = new int[N];
+
+    std::cout &lt;&lt; "\n\n// Allocate exactly N contiguous int-sized blocks of memory and store the address of the first memory cell of that array in the pointer variable named A.";
+    std::cout &lt;&lt; "\nA = new int[N];";
+
+    file &lt;&lt; "\n\n// Allocate exactly N contiguous int-sized blocks of memory and store the address of the first memory cell of that array in the pointer variable named A.";
+    file &lt;&lt; "\nA = new int[N];";
+
+    // Assign the memory address of the first element of the array pointed to by A to the pointer named test_pointer_to_int.
+    test_pointer_to_int = A;
+
+    /**
+     * Seed the pseudo random number generator with the integer number of seconds which have elapsed since the Unix Epoch (i.e. midnight of 01_JANUARY_1970).
+     * Seed the pseudo random number generator exactly one time during this program instance.
+     */
+    srand(time(NULL));
+
+    // Print the "srand(time(NULL));" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n/**";
+    std::cout &lt;&lt; "\n * Seed the pseudo random number generator with the integer number of seconds which have elapsed since the Unix Epoch (i.e. midnight of 01_JANUARY_1970).";
+    std::cout &lt;&lt; "\n * Seed the pseudo random number generator exactly one time during this program instance.";
+    std::cout &lt;&lt; "\n */";
+    std::cout &lt;&lt; "\nsrand(time(NULL));";
+
+    // Print the "srand(time(NULL));" instruction to the file output stream.
+    file &lt;&lt; "\n\n/**";
+    file &lt;&lt; "\n * Seed the pseudo random number generator with the integer number of seconds which have elapsed since the Unix Epoch (i.e. midnight of 01_JANUARY_1970).";
+    file &lt;&lt; "\n * Seed the pseudo random number generator exactly one time during this program instance.";
+    file &lt;&lt; "\n */";
+    file &lt;&lt; "\nsrand(time(NULL));";
+
+    /**
+     * For each element A[i] of the one-dimensional int array pointed to by A, 
+     * generate a (relatively) random integer no smaller than 0 and no larger than (S - 1)
+     * and store that integer in A[i].
+     */
+    for (i = 0; i &lt; N; i += 1) A[i] = rand() % S;
+
+    std::cout &lt;&lt; "\n\n/**";
+    std::cout &lt;&lt; "\n * For each element A[i] of the one-dimensional int array pointed to by A,";
+    std::cout &lt;&lt; "\n * generate a (relatively) random integer no smaller than 0 and no larger than (S - 1)";
+    std::cout &lt;&lt; "\n * and store that integer in A[i].";
+    std::cout &lt;&lt; "\n */";
+    std::cout &lt;&lt; "\nfor (i = 0; i &lt; N; i += 1) A[i] = rand() % S;";
+
+    file &lt;&lt; "\n\n/**";
+    file &lt;&lt; "\n * For each element A[i] of the one-dimensional int array pointed to by A,";
+    file &lt;&lt; "\n * generate a (relatively) random integer no smaller than 0 and no larger than (S - 1)";
+    file &lt;&lt; "\n * and store that integer in A[i].";
+    file &lt;&lt; "\n */";
+    file &lt;&lt; "\nfor (i = 0; i &lt; N; i += 1) A[i] = rand() % S;\n";
+
+    // Print the contents of the array of N integers pointed to by A.
+    for (i = 0; i &lt; N; i += 1) 
+    {
+        std::cout &lt;&lt; "\nA[" &lt;&lt; i &lt;&lt; "] := " &lt;&lt; A[i] &lt;&lt; ". // memory address of A[" &lt;&lt; i &lt;&lt; "] is " &lt;&lt; test_pointer_to_int &lt;&lt; ".";
+        file &lt;&lt; "\nA[" &lt;&lt; i &lt;&lt; "] := " &lt;&lt; A[i] &lt;&lt; ". // memory address of A[" &lt;&lt; i &lt;&lt; "] is " &lt;&lt; test_pointer_to_int &lt;&lt; ".";
+
+        // Increment the pointer-to-int variable by one int-sized increment in terms of contiguous byte-sized memory cells.
+        test_pointer_to_int += 1;
+    }
+
+    // Sort the integer values stored in array A in ascending order.
+    bubble_sort(A, N);
+
+    std::cout &lt;&lt; "\n\n// Sort the integer values stored in array A in ascending order.";
+    std::cout &lt;&lt; "\nbubble_sort(A, N);";
+
+    file &lt;&lt; "\n\n// Sort the integer values stored in array A in ascending order.";
+    file &lt;&lt; "\nbubble_sort(A, N);\n";
+
+    // Print the contents of the array of N integers pointed to by A.
+    for (i = 0; i &lt; N; i += 1) 
+    {
+        std::cout &lt;&lt; "\nA[" &lt;&lt; i &lt;&lt; "] := " &lt;&lt; A[i] &lt;&lt; ". // memory address of A[" &lt;&lt; i &lt;&lt; "] is " &lt;&lt; test_pointer_to_int &lt;&lt; ".";
+        file &lt;&lt; "\nA[" &lt;&lt; i &lt;&lt; "] := " &lt;&lt; A[i] &lt;&lt; ". // memory address of A[" &lt;&lt; i &lt;&lt; "] is " &lt;&lt; test_pointer_to_int &lt;&lt; ".";
+
+        // Increment the pointer-to-int variable by one int-sized increment in terms of contiguous byte-sized memory cells.
+        test_pointer_to_int += 1;
+    }
+
+    // Print a horizontal line to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+
+    // Print a horizontal line to the command line terminal.
+    file &lt;&lt; "\n\n--------------------------------";
+
+    // De-allocate the memory which was allocated to the dynamic array whose first element memory address is stored in A.
+    delete [] A;
+
+    // Print the "delete [] A;" instruction to the command line terminal.
+    std::cout &lt;&lt; "\n\n// De-allocate the memory which was allocated to the dynamic array whose first element memory address is stored in A.";
+    std::cout &lt;&lt; "\ndelete [] A;";
+
+    // Print the "delete [] A;" instruction to the file output stream.
+    file &lt;&lt; "\n\n// De-allocate the memory which was allocated to the dynamic array whose first element memory address is stored in A.";
+    file &lt;&lt; "\ndelete [] A;";
+
+    // Print a closing message to the command line terminal.
+    std::cout &lt;&lt; "\n\n--------------------------------";
+    std::cout &lt;&lt; "\nEnd Of Program";
+    std::cout &lt;&lt; "\n--------------------------------\n\n";
+
+    // Print a closing message to the file output stream.
+    file &lt;&lt; "\n\n--------------------------------";
+    file &lt;&lt; "\nEnd Of Program";
+    file &lt;&lt; "\n--------------------------------";
+
+    // Close the file output stream.
+    file.close();
+
+    // Exit the program.
+    return 0;
+}</pre>
+<hr>
+<p><strong>Sample Program Output</strong></p>
+<hr>
+<p>plain-text file: <a style="background:#000000;color:#ff9000;" href="https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays_output.txt" target="_blank" rel="noopener">https://github.com/karlinarayberinger/karlina_object_ultimate_starter_pack/blob/main/pointers_and_arrays_output.txt</a></p>
+<hr>
+<pre>--------------------------------
+Start Of Program
+--------------------------------
+
+// Print the data size of various C++ data types to the file output stream.
+sizeof(bool) := 1. // number of contiguous byte-sized memory cells which a bool type variable occupies
+sizeof(char) := 1. // number of contiguous byte-sized memory cells which a char type variable occupies
+sizeof(int) := 4. // number of contiguous byte-sized memory cells which an int type variable occupies
+sizeof(float) := 4. // number of contiguous byte-sized memory cells which a float type variable occupies
+sizeof(double) := 8. // number of contiguous byte-sized memory cells which a double type variable occupies
+sizeof(bool *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-bool type variable occupies 
+sizeof(char *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-char type variable occupies
+sizeof(int *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-int type variable occupies
+sizeof(int **) := 8. // number of contiguous byte-sized memory cells which a pointer-to-pointer-to-int type variable occupies
+sizeof(float *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-float type variable occupies
+sizeof(double *) := 8. // number of contiguous byte-sized memory cells which a pointer-to-double type variable occupies
+sizeof(void *) := 8. // number of contiguous byte-sized memory cells which a void pointer (datatype independent pointer) occupies.
+
+--------------------------------
+
+// Declare an int type variable which will be used to demonstrate how C++ pointers work.
+int test_int = 25;
+
+// Declare a pointer which stores the address of the first cell of an int-sized block of memory.
+// (Note that intializing pointers to NULL prevents those variables from being set to "garbage" data).
+int * test_pointer_to_int = NULL;
+
+// Store the address of test_int in test_pointer_to_int using the reference (&amp;) operator.
+test_pointer_to_int = &amp;test_int;
+
+// Indirectly access the value stored in test_int using the dereference (*) operator.
+* test_pointer_to_int = 25.
+
+// Increment the value stored in test_pointer_to_int by one int-sized memory increment.
+test_pointer_to_int += 1;
+
+test_pointer_to_int := 0x7ffcd50d9db0. // memory address of the cell which is 4 cells to the right of test_int
+
+--------------------------------
+
+// Declare an char type variable which will be used to demonstrate how C++ pointers work.
+char test_char = 'K';
+
+// Declare a pointer which stores the address of the first cell of an char-sized block of memory.
+// (Use malloc to assign memory to the pointer-to-char variable).
+char * test_pointer_to_char = (char *) malloc(1);
+
+// Declare a void pointer and initialize it to the value stored in test_pointer_to_char.
+// (Unlike test_pointer_to_char, void_test_pointer will display the memory address that pointer stores to the output stream).
+void * test_void_pointer = test_pointer_to_char;
+
+// Store the address of test_char in test_pointer_to_char using the reference (&amp;) operator.
+test_pointer_to_char = &amp;test_char;
+test_void_pointer = test_pointer_to_char;
+
+test_void_pointer := 0x7ffcd50d9da3. // memory address of test_char
+
+// Indirectly access the value stored in test_char using the dereference (*) operator.
+* test_pointer_to_char = K.
+
+// Increment the value stored in test_pointer_to_int by one char-sized memory increment.
+test_pointer_to_char += 1;
+test_void_pointer = test_pointer_to_char;
+
+test_void_pointer := 0x7ffcd50d9da4. // memory address of the cell which is 1 cell to the right of test_char
+
+--------------------------------
+
+Two-Dimensional Rectangular Array named B:
+
+B[0][0] := 1. // at memory address 0x5634ccf51500
+B[0][1] := 2. // at memory address 0x5634ccf51504
+B[0][2] := 3. // at memory address 0x5634ccf51508
+B[0][3] := 4. // at memory address 0x5634ccf5150c
+B[0][4] := 5. // at memory address 0x5634ccf51510
+B[0][5] := 6. // at memory address 0x5634ccf51514
+B[0][6] := 7. // at memory address 0x5634ccf51518
+B[0][7] := 8. // at memory address 0x5634ccf5151c
+B[0][8] := 9. // at memory address 0x5634ccf51520
+B[0][9] := 10. // at memory address 0x5634ccf51524
+B[1][0] := 11. // at memory address 0x5634ccf51530
+B[1][1] := 12. // at memory address 0x5634ccf51534
+B[1][2] := 13. // at memory address 0x5634ccf51538
+B[1][3] := 14. // at memory address 0x5634ccf5153c
+B[1][4] := 15. // at memory address 0x5634ccf51540
+B[1][5] := 16. // at memory address 0x5634ccf51544
+B[1][6] := 17. // at memory address 0x5634ccf51548
+B[1][7] := 18. // at memory address 0x5634ccf5154c
+B[1][8] := 19. // at memory address 0x5634ccf51550
+B[1][9] := 20. // at memory address 0x5634ccf51554
+B[2][0] := 21. // at memory address 0x5634ccf51560
+B[2][1] := 22. // at memory address 0x5634ccf51564
+B[2][2] := 23. // at memory address 0x5634ccf51568
+B[2][3] := 24. // at memory address 0x5634ccf5156c
+B[2][4] := 25. // at memory address 0x5634ccf51570
+B[2][5] := 26. // at memory address 0x5634ccf51574
+B[2][6] := 27. // at memory address 0x5634ccf51578
+B[2][7] := 28. // at memory address 0x5634ccf5157c
+B[2][8] := 29. // at memory address 0x5634ccf51580
+B[2][9] := 30. // at memory address 0x5634ccf51584
+B[3][0] := 31. // at memory address 0x5634ccf51590
+B[3][1] := 32. // at memory address 0x5634ccf51594
+B[3][2] := 33. // at memory address 0x5634ccf51598
+B[3][3] := 34. // at memory address 0x5634ccf5159c
+B[3][4] := 35. // at memory address 0x5634ccf515a0
+B[3][5] := 36. // at memory address 0x5634ccf515a4
+B[3][6] := 37. // at memory address 0x5634ccf515a8
+B[3][7] := 38. // at memory address 0x5634ccf515ac
+B[3][8] := 39. // at memory address 0x5634ccf515b0
+B[3][9] := 40. // at memory address 0x5634ccf515b4
+
+// De-allocate the memory which was used to dynamically instantiate the two-dimensional array named B.
+for (i = 0; i &lt; 4; i += 1) delete [] B[i];
+
+--------------------------------
+
+The value which was entered for N is 100.
+
+N := 100.
+
+--------------------------------
+
+The value which was entered for S is 1000.
+
+S := 1000.
+
+--------------------------------
+
+// Allocate exactly N contiguous int-sized blocks of memory and store the address of the first memory cell of that array in the pointer variable named A.
+A = new int[N];
+
+/**
+ * Seed the pseudo random number generator with the integer number of seconds which have elapsed since the Unix Epoch (i.e. midnight of 01_JANUARY_1970).
+ * Seed the pseudo random number generator exactly one time during this program instance.
+ */
+srand(time(NULL));
+
+/**
+ * For each element A[i] of the one-dimensional int array pointed to by A,
+ * generate a (relatively) random integer no smaller than 0 and no larger than (S - 1)
+ * and store that integer in A[i].
+ */
+for (i = 0; i &lt; N; i += 1) A[i] = rand() % S;
+
+A[0] := 221. // memory address of A[0] is 0x5634ccf519d0.
+A[1] := 200. // memory address of A[1] is 0x5634ccf519d4.
+A[2] := 755. // memory address of A[2] is 0x5634ccf519d8.
+A[3] := 672. // memory address of A[3] is 0x5634ccf519dc.
+A[4] := 970. // memory address of A[4] is 0x5634ccf519e0.
+A[5] := 39. // memory address of A[5] is 0x5634ccf519e4.
+A[6] := 542. // memory address of A[6] is 0x5634ccf519e8.
+A[7] := 9. // memory address of A[7] is 0x5634ccf519ec.
+A[8] := 17. // memory address of A[8] is 0x5634ccf519f0.
+A[9] := 292. // memory address of A[9] is 0x5634ccf519f4.
+A[10] := 858. // memory address of A[10] is 0x5634ccf519f8.
+A[11] := 437. // memory address of A[11] is 0x5634ccf519fc.
+A[12] := 469. // memory address of A[12] is 0x5634ccf51a00.
+A[13] := 154. // memory address of A[13] is 0x5634ccf51a04.
+A[14] := 485. // memory address of A[14] is 0x5634ccf51a08.
+A[15] := 921. // memory address of A[15] is 0x5634ccf51a0c.
+A[16] := 432. // memory address of A[16] is 0x5634ccf51a10.
+A[17] := 816. // memory address of A[17] is 0x5634ccf51a14.
+A[18] := 123. // memory address of A[18] is 0x5634ccf51a18.
+A[19] := 979. // memory address of A[19] is 0x5634ccf51a1c.
+A[20] := 663. // memory address of A[20] is 0x5634ccf51a20.
+A[21] := 517. // memory address of A[21] is 0x5634ccf51a24.
+A[22] := 832. // memory address of A[22] is 0x5634ccf51a28.
+A[23] := 636. // memory address of A[23] is 0x5634ccf51a2c.
+A[24] := 935. // memory address of A[24] is 0x5634ccf51a30.
+A[25] := 190. // memory address of A[25] is 0x5634ccf51a34.
+A[26] := 330. // memory address of A[26] is 0x5634ccf51a38.
+A[27] := 411. // memory address of A[27] is 0x5634ccf51a3c.
+A[28] := 124. // memory address of A[28] is 0x5634ccf51a40.
+A[29] := 74. // memory address of A[29] is 0x5634ccf51a44.
+A[30] := 289. // memory address of A[30] is 0x5634ccf51a48.
+A[31] := 697. // memory address of A[31] is 0x5634ccf51a4c.
+A[32] := 275. // memory address of A[32] is 0x5634ccf51a50.
+A[33] := 45. // memory address of A[33] is 0x5634ccf51a54.
+A[34] := 721. // memory address of A[34] is 0x5634ccf51a58.
+A[35] := 597. // memory address of A[35] is 0x5634ccf51a5c.
+A[36] := 436. // memory address of A[36] is 0x5634ccf51a60.
+A[37] := 263. // memory address of A[37] is 0x5634ccf51a64.
+A[38] := 607. // memory address of A[38] is 0x5634ccf51a68.
+A[39] := 453. // memory address of A[39] is 0x5634ccf51a6c.
+A[40] := 555. // memory address of A[40] is 0x5634ccf51a70.
+A[41] := 817. // memory address of A[41] is 0x5634ccf51a74.
+A[42] := 243. // memory address of A[42] is 0x5634ccf51a78.
+A[43] := 376. // memory address of A[43] is 0x5634ccf51a7c.
+A[44] := 971. // memory address of A[44] is 0x5634ccf51a80.
+A[45] := 728. // memory address of A[45] is 0x5634ccf51a84.
+A[46] := 297. // memory address of A[46] is 0x5634ccf51a88.
+A[47] := 755. // memory address of A[47] is 0x5634ccf51a8c.
+A[48] := 896. // memory address of A[48] is 0x5634ccf51a90.
+A[49] := 772. // memory address of A[49] is 0x5634ccf51a94.
+A[50] := 87. // memory address of A[50] is 0x5634ccf51a98.
+A[51] := 559. // memory address of A[51] is 0x5634ccf51a9c.
+A[52] := 290. // memory address of A[52] is 0x5634ccf51aa0.
+A[53] := 919. // memory address of A[53] is 0x5634ccf51aa4.
+A[54] := 195. // memory address of A[54] is 0x5634ccf51aa8.
+A[55] := 577. // memory address of A[55] is 0x5634ccf51aac.
+A[56] := 109. // memory address of A[56] is 0x5634ccf51ab0.
+A[57] := 878. // memory address of A[57] is 0x5634ccf51ab4.
+A[58] := 988. // memory address of A[58] is 0x5634ccf51ab8.
+A[59] := 585. // memory address of A[59] is 0x5634ccf51abc.
+A[60] := 952. // memory address of A[60] is 0x5634ccf51ac0.
+A[61] := 629. // memory address of A[61] is 0x5634ccf51ac4.
+A[62] := 634. // memory address of A[62] is 0x5634ccf51ac8.
+A[63] := 579. // memory address of A[63] is 0x5634ccf51acc.
+A[64] := 26. // memory address of A[64] is 0x5634ccf51ad0.
+A[65] := 355. // memory address of A[65] is 0x5634ccf51ad4.
+A[66] := 529. // memory address of A[66] is 0x5634ccf51ad8.
+A[67] := 462. // memory address of A[67] is 0x5634ccf51adc.
+A[68] := 970. // memory address of A[68] is 0x5634ccf51ae0.
+A[69] := 136. // memory address of A[69] is 0x5634ccf51ae4.
+A[70] := 916. // memory address of A[70] is 0x5634ccf51ae8.
+A[71] := 526. // memory address of A[71] is 0x5634ccf51aec.
+A[72] := 305. // memory address of A[72] is 0x5634ccf51af0.
+A[73] := 159. // memory address of A[73] is 0x5634ccf51af4.
+A[74] := 902. // memory address of A[74] is 0x5634ccf51af8.
+A[75] := 628. // memory address of A[75] is 0x5634ccf51afc.
+A[76] := 239. // memory address of A[76] is 0x5634ccf51b00.
+A[77] := 552. // memory address of A[77] is 0x5634ccf51b04.
+A[78] := 383. // memory address of A[78] is 0x5634ccf51b08.
+A[79] := 136. // memory address of A[79] is 0x5634ccf51b0c.
+A[80] := 324. // memory address of A[80] is 0x5634ccf51b10.
+A[81] := 470. // memory address of A[81] is 0x5634ccf51b14.
+A[82] := 47. // memory address of A[82] is 0x5634ccf51b18.
+A[83] := 966. // memory address of A[83] is 0x5634ccf51b1c.
+A[84] := 742. // memory address of A[84] is 0x5634ccf51b20.
+A[85] := 595. // memory address of A[85] is 0x5634ccf51b24.
+A[86] := 543. // memory address of A[86] is 0x5634ccf51b28.
+A[87] := 203. // memory address of A[87] is 0x5634ccf51b2c.
+A[88] := 825. // memory address of A[88] is 0x5634ccf51b30.
+A[89] := 883. // memory address of A[89] is 0x5634ccf51b34.
+A[90] := 789. // memory address of A[90] is 0x5634ccf51b38.
+A[91] := 777. // memory address of A[91] is 0x5634ccf51b3c.
+A[92] := 513. // memory address of A[92] is 0x5634ccf51b40.
+A[93] := 423. // memory address of A[93] is 0x5634ccf51b44.
+A[94] := 709. // memory address of A[94] is 0x5634ccf51b48.
+A[95] := 891. // memory address of A[95] is 0x5634ccf51b4c.
+A[96] := 131. // memory address of A[96] is 0x5634ccf51b50.
+A[97] := 238. // memory address of A[97] is 0x5634ccf51b54.
+A[98] := 354. // memory address of A[98] is 0x5634ccf51b58.
+A[99] := 101. // memory address of A[99] is 0x5634ccf51b5c.
+
+// Sort the integer values stored in array A in ascending order.
+bubble_sort(A, N);
+
+A[0] := 9. // memory address of A[0] is 0x5634ccf51b60.
+A[1] := 17. // memory address of A[1] is 0x5634ccf51b64.
+A[2] := 26. // memory address of A[2] is 0x5634ccf51b68.
+A[3] := 39. // memory address of A[3] is 0x5634ccf51b6c.
+A[4] := 45. // memory address of A[4] is 0x5634ccf51b70.
+A[5] := 47. // memory address of A[5] is 0x5634ccf51b74.
+A[6] := 74. // memory address of A[6] is 0x5634ccf51b78.
+A[7] := 87. // memory address of A[7] is 0x5634ccf51b7c.
+A[8] := 101. // memory address of A[8] is 0x5634ccf51b80.
+A[9] := 109. // memory address of A[9] is 0x5634ccf51b84.
+A[10] := 123. // memory address of A[10] is 0x5634ccf51b88.
+A[11] := 124. // memory address of A[11] is 0x5634ccf51b8c.
+A[12] := 131. // memory address of A[12] is 0x5634ccf51b90.
+A[13] := 136. // memory address of A[13] is 0x5634ccf51b94.
+A[14] := 136. // memory address of A[14] is 0x5634ccf51b98.
+A[15] := 154. // memory address of A[15] is 0x5634ccf51b9c.
+A[16] := 159. // memory address of A[16] is 0x5634ccf51ba0.
+A[17] := 190. // memory address of A[17] is 0x5634ccf51ba4.
+A[18] := 195. // memory address of A[18] is 0x5634ccf51ba8.
+A[19] := 200. // memory address of A[19] is 0x5634ccf51bac.
+A[20] := 203. // memory address of A[20] is 0x5634ccf51bb0.
+A[21] := 221. // memory address of A[21] is 0x5634ccf51bb4.
+A[22] := 238. // memory address of A[22] is 0x5634ccf51bb8.
+A[23] := 239. // memory address of A[23] is 0x5634ccf51bbc.
+A[24] := 243. // memory address of A[24] is 0x5634ccf51bc0.
+A[25] := 263. // memory address of A[25] is 0x5634ccf51bc4.
+A[26] := 275. // memory address of A[26] is 0x5634ccf51bc8.
+A[27] := 289. // memory address of A[27] is 0x5634ccf51bcc.
+A[28] := 290. // memory address of A[28] is 0x5634ccf51bd0.
+A[29] := 292. // memory address of A[29] is 0x5634ccf51bd4.
+A[30] := 297. // memory address of A[30] is 0x5634ccf51bd8.
+A[31] := 305. // memory address of A[31] is 0x5634ccf51bdc.
+A[32] := 324. // memory address of A[32] is 0x5634ccf51be0.
+A[33] := 330. // memory address of A[33] is 0x5634ccf51be4.
+A[34] := 354. // memory address of A[34] is 0x5634ccf51be8.
+A[35] := 355. // memory address of A[35] is 0x5634ccf51bec.
+A[36] := 376. // memory address of A[36] is 0x5634ccf51bf0.
+A[37] := 383. // memory address of A[37] is 0x5634ccf51bf4.
+A[38] := 411. // memory address of A[38] is 0x5634ccf51bf8.
+A[39] := 423. // memory address of A[39] is 0x5634ccf51bfc.
+A[40] := 432. // memory address of A[40] is 0x5634ccf51c00.
+A[41] := 436. // memory address of A[41] is 0x5634ccf51c04.
+A[42] := 437. // memory address of A[42] is 0x5634ccf51c08.
+A[43] := 453. // memory address of A[43] is 0x5634ccf51c0c.
+A[44] := 462. // memory address of A[44] is 0x5634ccf51c10.
+A[45] := 469. // memory address of A[45] is 0x5634ccf51c14.
+A[46] := 470. // memory address of A[46] is 0x5634ccf51c18.
+A[47] := 485. // memory address of A[47] is 0x5634ccf51c1c.
+A[48] := 513. // memory address of A[48] is 0x5634ccf51c20.
+A[49] := 517. // memory address of A[49] is 0x5634ccf51c24.
+A[50] := 526. // memory address of A[50] is 0x5634ccf51c28.
+A[51] := 529. // memory address of A[51] is 0x5634ccf51c2c.
+A[52] := 542. // memory address of A[52] is 0x5634ccf51c30.
+A[53] := 543. // memory address of A[53] is 0x5634ccf51c34.
+A[54] := 552. // memory address of A[54] is 0x5634ccf51c38.
+A[55] := 555. // memory address of A[55] is 0x5634ccf51c3c.
+A[56] := 559. // memory address of A[56] is 0x5634ccf51c40.
+A[57] := 577. // memory address of A[57] is 0x5634ccf51c44.
+A[58] := 579. // memory address of A[58] is 0x5634ccf51c48.
+A[59] := 585. // memory address of A[59] is 0x5634ccf51c4c.
+A[60] := 595. // memory address of A[60] is 0x5634ccf51c50.
+A[61] := 597. // memory address of A[61] is 0x5634ccf51c54.
+A[62] := 607. // memory address of A[62] is 0x5634ccf51c58.
+A[63] := 628. // memory address of A[63] is 0x5634ccf51c5c.
+A[64] := 629. // memory address of A[64] is 0x5634ccf51c60.
+A[65] := 634. // memory address of A[65] is 0x5634ccf51c64.
+A[66] := 636. // memory address of A[66] is 0x5634ccf51c68.
+A[67] := 663. // memory address of A[67] is 0x5634ccf51c6c.
+A[68] := 672. // memory address of A[68] is 0x5634ccf51c70.
+A[69] := 697. // memory address of A[69] is 0x5634ccf51c74.
+A[70] := 709. // memory address of A[70] is 0x5634ccf51c78.
+A[71] := 721. // memory address of A[71] is 0x5634ccf51c7c.
+A[72] := 728. // memory address of A[72] is 0x5634ccf51c80.
+A[73] := 742. // memory address of A[73] is 0x5634ccf51c84.
+A[74] := 755. // memory address of A[74] is 0x5634ccf51c88.
+A[75] := 755. // memory address of A[75] is 0x5634ccf51c8c.
+A[76] := 772. // memory address of A[76] is 0x5634ccf51c90.
+A[77] := 777. // memory address of A[77] is 0x5634ccf51c94.
+A[78] := 789. // memory address of A[78] is 0x5634ccf51c98.
+A[79] := 816. // memory address of A[79] is 0x5634ccf51c9c.
+A[80] := 817. // memory address of A[80] is 0x5634ccf51ca0.
+A[81] := 825. // memory address of A[81] is 0x5634ccf51ca4.
+A[82] := 832. // memory address of A[82] is 0x5634ccf51ca8.
+A[83] := 858. // memory address of A[83] is 0x5634ccf51cac.
+A[84] := 878. // memory address of A[84] is 0x5634ccf51cb0.
+A[85] := 883. // memory address of A[85] is 0x5634ccf51cb4.
+A[86] := 891. // memory address of A[86] is 0x5634ccf51cb8.
+A[87] := 896. // memory address of A[87] is 0x5634ccf51cbc.
+A[88] := 902. // memory address of A[88] is 0x5634ccf51cc0.
+A[89] := 916. // memory address of A[89] is 0x5634ccf51cc4.
+A[90] := 919. // memory address of A[90] is 0x5634ccf51cc8.
+A[91] := 921. // memory address of A[91] is 0x5634ccf51ccc.
+A[92] := 935. // memory address of A[92] is 0x5634ccf51cd0.
+A[93] := 952. // memory address of A[93] is 0x5634ccf51cd4.
+A[94] := 966. // memory address of A[94] is 0x5634ccf51cd8.
+A[95] := 970. // memory address of A[95] is 0x5634ccf51cdc.
+A[96] := 970. // memory address of A[96] is 0x5634ccf51ce0.
+A[97] := 971. // memory address of A[97] is 0x5634ccf51ce4.
+A[98] := 979. // memory address of A[98] is 0x5634ccf51ce8.
+A[99] := 988. // memory address of A[99] is 0x5634ccf51cec.
+
+--------------------------------
+
+// De-allocate the memory which was allocated to the dynamic array whose first element memory address is stored in A.
+delete [] A;
+
+--------------------------------
+End Of Program
+--------------------------------
+</pre>
+<hr>
+<p>This page was last updated on 06_MAY_2022. The content displayed on this page is licensed as <a style="background:#000000;color:#ff9000;" href="https://karlinaobject.wordpress.com/public_domain/" target="_blank" rel="noopener">PUBLIC_DOMAIN</a> intellectual property.</p>
+<hr>
